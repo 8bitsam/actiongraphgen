@@ -1,7 +1,7 @@
 from database import *
 
 
-def main():
+def init_drive():
     """Shows basic usage of the Drive v3 API.
     Prints the names and ids of the first 5 files the user has access to.
     """
@@ -16,6 +16,10 @@ def main():
     items = results.get("files", [])
     # list all 20 files & folders
     list_files(items)
+
+
+def main():
+    init_drive()
 
 
 if __name__ == "__main__":

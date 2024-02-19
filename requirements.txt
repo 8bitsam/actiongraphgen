@@ -1,7 +1,6 @@
 # List required packages in this file, one per line.
 google-api-python-client
 google
-matplotlib
+matplotlib-base
 networkx
 numpy
-pickle

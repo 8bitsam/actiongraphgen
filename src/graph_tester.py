@@ -28,6 +28,8 @@ G = nx.Graph()
 G.add_node('A', matrix=np.array([[1, 2], [3, 4]]))
 G.add_node('B', matrix=np.array([[0, 0], [0, 0]]))
 G.add_edge('A', 'B', weight=str_to_op['scalar multiplication'])
+G.add_node('C', matrix=np.array([[0, 0], [0, 0]]))
+G.add_node('D', matrix=np.array([[0, 0], [0, 0]]))
 
 # Perform operation
 M = G.nodes['A']['matrix']

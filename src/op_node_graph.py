@@ -1,3 +1,4 @@
+import json
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
@@ -63,7 +64,7 @@ def process_graph(graph, start_node):
 
 # Start processing from the first node
 process_graph(G, 'A')
-
+ 
 # Results
 # Iterate over each node and its attributes in the graph
 for node, data in G.nodes(data=True):
@@ -83,5 +84,3 @@ for node, data in G.nodes(data=True):
 pos = nx.spring_layout(G)
 nx.draw(G, pos, with_labels=True, node_size=2000, node_color='skyblue', font_size=10)
 plt.show()
-
-# Export data as json file

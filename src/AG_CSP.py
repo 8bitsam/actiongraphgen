@@ -6,7 +6,7 @@ import random
 
 # Constants
 MAX_NODES = 100
-MAX_DEPTH = 10
+MAX_DEPTH = MAX_NODES / 10
 MATRIX_SIZE = 2
 
 # Operations dictionary
@@ -25,8 +25,8 @@ node_details = {}
 
 def generate_graph(terminal_matrix):
     # Start with the terminal node
-    node_details[99] = {'matrix': terminal_matrix, 'operation': (random.randint(0, 4), random.randint(1, 10))}
-    current_node = 98  # Start generating from the second last node
+    node_details[MAX_NODES - 1] = {'matrix': terminal_matrix, 'operation': (random.randint(0, 4), random.randint(1, 10))}
+    current_node = MAX_NODES - 2  # Start generating from the second last node
     
     while current_node >= 0:
         # Randomly decide the operation for the current node
@@ -44,7 +44,6 @@ def generate_graph(terminal_matrix):
             for parent in parents:
                 adjacency_matrix[current_node, parent] = 1
             current_node -= 1
-
 
     
     # Create the graph object
@@ -98,6 +97,10 @@ def visualize_graph(G):
 
 
 # Initialize known terminal matrix and display the graph
-terminal_matrix = np.array([[1, 2], [3, 4]])  # Example terminal matrix
+terminal_matrix = np.array([[1, 2], [3, 4]])
 G = generate_graph(terminal_matrix)
+# Print the adj matrix
+print("##### ADJACENCY MATRIX #####")
+print(adjacency_matrix)
+print("############################")
 visualize_graph(G)

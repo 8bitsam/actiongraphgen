@@ -10,7 +10,12 @@ actiongraphgen
         :target: https://pypi.python.org/pypi/actiongraphgen
 
 
-of a generative neural network that creates graphs for matrix operations.
+A Python package containing a generative neural network that creates graphs for matrix operations called "action graphs." It consists of several components:
+1) Generator : program that stochastiacally generates structurally valid action graphs
+2) Selector : evaluates the action graphs, then scores them based on how close the terminal matrix is to the input matrix (which was the "intended" terminal matrix)
+3) Database : stores the training data from the selector
+4) Neural network : the actual core of the package, which is a generative AI that requires user-specified parameters.
+
 
 * Free software: 3-clause BSD license
 * Documentation: (COMING SOON!) https://8bitsam.github.io/actiongraphgen.

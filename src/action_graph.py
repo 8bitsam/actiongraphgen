@@ -23,14 +23,3 @@ class ActionGraph:
                 if self.adj_matrix[i, j] == 1:
                     G.add_edge(i, j)
         return G
-    
-
-# Example
-params = {
-    "matrix" : np.ndarray,
-    "scalar" : int,
-    "op" : int
-}
-
-graph = ActionGraph(10, params)
-print(graph.graph)

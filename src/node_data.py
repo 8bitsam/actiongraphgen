@@ -3,12 +3,12 @@ class NodeData:
     def __init__(self, max_nodes : int, param_types : dict) -> None:
         self.max_nodes = max_nodes
         self.param_types = param_types
-        self.data = self._init_data()
+        self.data_list = self._init_data()
 
     def _init_data(self) -> list[dict]:
         # Initializes the structure of a node param dictionary list filled with None
-        data_list = []
+        lst = []
         for _ in range(self.max_nodes):
             data_dict = {param: None for param, dtype in self.param_types.items()}
-            data_list.append(data_dict)
-        return data_list
+            lst.append(data_dict)
+        return lst

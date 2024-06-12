@@ -23,6 +23,4 @@ class MatrixAGG(Generator):
             4 : "Multiplication"
         }
         self.operations = operations
-        super().__init__(self, max_nodes, param_types, processes=operations)
-    
-    
+        super().__init__(max_nodes, param_types, operations)

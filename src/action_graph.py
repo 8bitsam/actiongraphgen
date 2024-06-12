@@ -1,4 +1,3 @@
-from generator import Generator
 import matplotlib.pyplot as plt
 import networkx as nx
 from node_data import NodeData
@@ -6,13 +5,11 @@ import numpy as np
 import random
 
 class ActionGraph:
-    def __init__(self, max_nodes : int, param_types : dict, generator : Generator) -> None:
+    def __init__(self, max_nodes : int, param_types : dict) -> None:
         self.adj_matrix = np.zeros((max_nodes, max_nodes))
         self.data = NodeData(max_nodes, param_types)
         self.max_nodes = max_nodes
         self.param_types = param_types
-        self.generator = generator
-        generator.fill(self)
         self.graph = self._to_graph()
 
     def _to_graph(self) -> nx.DiGraph:

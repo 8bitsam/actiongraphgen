@@ -1,8 +1,4 @@
-from action_graph import ActionGraph
-from generator import Generator
-import matplotlib.pyplot as plt
-import networkx as nx
-from node_data import NodeData
+from src.actiongraphgen.structure.generator import Generator
 import numpy as np
 import random
 

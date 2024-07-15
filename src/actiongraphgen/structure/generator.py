@@ -1,4 +1,4 @@
-from action_graph import ActionGraph
+from src.actiongraphgen.structure.action_graph import ActionGraph
 
 
 class Generator:

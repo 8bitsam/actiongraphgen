@@ -1,6 +1,6 @@
 # Class for node data storage/params
 class NodeData:
-    def __init__(self, max_nodes : int, param_types : dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict) -> None:
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.data_list = self._init_data()

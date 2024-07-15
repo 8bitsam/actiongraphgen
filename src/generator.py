@@ -1,7 +1,8 @@
 from action_graph import ActionGraph
 
+
 class Generator:
-    def __init__(self, max_nodes : int, param_types : dict, processes : dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict, processes: dict) -> None:
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.processes = processes

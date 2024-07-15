@@ -1,11 +1,11 @@
-import matplotlib.pyplot as plt
 import networkx as nx
-from node_data import NodeData
 import numpy as np
-import random
+
+from node_data import NodeData
+
 
 class ActionGraph:
-    def __init__(self, max_nodes : int, param_types : dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict) -> None:
         self.adj_matrix = np.zeros((max_nodes, max_nodes))
         self.data = NodeData(max_nodes, param_types)
         self.max_nodes = max_nodes

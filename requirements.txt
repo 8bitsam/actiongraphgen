@@ -1,6 +1,0 @@
-# List required packages in this file, one per line.
-google-api-python-client
-google
-matplotlib-base
-networkx
-numpy

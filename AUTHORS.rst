@@ -1,13 +1,10 @@
-=======
-Credits
+Authors
 =======
 
-Maintainer
-----------
-
-* Billinge group <sqa2001@columbia.edu>
+Billinge Group and community contibutors.
 
 Contributors
 ------------
 
-None yet. Why not be the first? See: CONTRIBUTING.rst
+For a list of contributors, visit
+https://github.com/8bitsam/actiongraphgen/graphs/contributors

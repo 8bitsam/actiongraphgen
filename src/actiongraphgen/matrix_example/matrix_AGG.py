@@ -1,6 +1,8 @@
-from src.actiongraphgen.structure.generator import Generator
-import numpy as np
 import random
+
+import numpy as np
+
+from src.actiongraphgen.structure.generator import Generator
 
 
 class MatrixAGG(Generator):

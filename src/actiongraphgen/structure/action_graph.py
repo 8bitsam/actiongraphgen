@@ -40,6 +40,8 @@ class ActionGraph:
 
     def _to_graph(self) -> nx.DiGraph:
         """Protected method that creates a networkx DiGraph object from the adjacency matrix.
+
+        :rtype: nx.DiGraph
         """
         G = nx.DiGraph()
         for i in range(self.max_nodes):

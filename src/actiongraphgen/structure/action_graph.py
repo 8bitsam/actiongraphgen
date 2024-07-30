@@ -35,6 +35,19 @@ class ActionGraph:
         self.param_types = param_types
         self.graph = self._to_graph()
 
+    def fill_parents(self, node_pos: int, parents: list[int]) -> None:
+        """Method to fill in the adjacency matrix to denote parent positions.
+        :param node_pos: The index of the node, which is in range [0, max_nodes), to fill in the parents of.
+        :type node_pos: int
+
+        :param parents: A list of indices of the node's parents, also in range [0, max_nodes).
+        :type parents: list[int]
+        """
+        adj_matrix = self.action_graph.adj_matrix
+        for parent in parents:
+            col = adj_matrix[:, node_pos]
+            col[parent] = 1
+
     def get_child_nodes(self, node: int) -> np.ndarray:
         """Method to get all the positions of a node's children and return them in an array.
         :param node: The index of the node (within the adjacency matrix) to find child positions for.

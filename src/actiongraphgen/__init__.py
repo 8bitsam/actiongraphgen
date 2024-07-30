@@ -16,7 +16,7 @@
 """Structural framework for action graph generators."""
 
 # package version
-from actiongraphgen.version import __version__
+from src.actiongraphgen.version import __version__
 
 # silence the pyflakes syntax checker
 assert __version__ or True

@@ -14,7 +14,7 @@
 
 import networkx as nx
 import numpy as np
-from node_data import NodeData
+from src.actiongraphgen.structure.node_data import NodeData
 
 
 class ActionGraph:

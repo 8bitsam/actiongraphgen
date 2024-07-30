@@ -12,6 +12,7 @@
 #
 ##############################################################################
 
+
 class NodeData:
     """This class represents a data object that contains node data and storage parameters for the action graph.
 
@@ -23,8 +24,7 @@ class NodeData:
     """
 
     def __init__(self, max_nodes: int, param_types: dict) -> None:
-        """Constructor method
-        """
+        """Constructor method"""
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.data_list = self._init_data()

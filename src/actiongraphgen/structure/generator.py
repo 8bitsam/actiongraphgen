@@ -29,9 +29,9 @@ class Generator:
     :param processes: A dictionary containing key-value pairs of process names and their type mappings.
     :type processes: dict
     """
+
     def __init__(self, max_nodes: int, param_types: dict, processes: dict) -> None:
-        """Constructor method
-        """
+        """Constructor method"""
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.processes = processes

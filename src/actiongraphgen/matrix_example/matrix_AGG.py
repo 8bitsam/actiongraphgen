@@ -31,8 +31,7 @@ class MatrixAGG(Generator):
     """
 
     def __init__(self, max_nodes: int, matrix: np.ndarray) -> None:
-        """Constructor method
-        """
+        """Constructor method"""
         param_types = {"matrix": np.ndarray, "op": int, "scalar": int}
         self.param_types = param_types
         operations = {0: "None", 1: "Inverse", 2: "Addition", 3: "Subtraction", 4: "Multiplication"}
@@ -41,8 +40,7 @@ class MatrixAGG(Generator):
         self.matrix = matrix  # terminal matrix as input to inverse problem
 
     def datagen(self) -> None:
-        """Randomly fill in the node data for the purposes of creating random training data.
-        """
+        """Randomly fill in the node data for the purposes of creating random training data."""
         for i in range(self.max_nodes):
             # get random values and assign them to list
             scalar = random.randint(1, 100)

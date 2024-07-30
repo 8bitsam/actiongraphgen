@@ -41,17 +41,132 @@ class MatrixAGG(Generator):
 
     def datagen(self) -> None:
         """Randomly fill in the node data for the purposes of creating random training data."""
+        adj_matrix = self.action_graph.adj_matrix
+
         for i in range(self.max_nodes):
+            # 1's in row i represent children -> find 1's for this
+            # 1's in column i represent parents -> add 1's for this
+
             # get random values and assign them to list
             scalar = random.randint(1, 100)
             op = random.randint(0, 4)
+
+            # evaluate based on operation
+            child_pos = self.action_graph.get_child_nodes(i)[0]  # nodes in this action graph only ever have one child
+
+            # choose positions for parents
+            parent_pos = []
+            one_parent = op == 0 or op == 1
+            two_parents = op == 2 or op == 3 or op == 4
+
+            # termination condition for root nodes
+            if (one_parent and (self.max_nodes - i) <= 1) or (two_parents and (self.max_nodes - i) <= 2):
+                break
+
+            # if not terminated can set values
             self.action_graph.data.data_list[i]["scalar"] = scalar
             self.action_graph.data.data_list[i]["op"] = op
+
+            # add parent positions
+            # start case
+            if i == 0:
+                self.action_graph.data.data_list[i]["matrix"] = self.matrix
+                continue
+            # non-start case
+            if one_parent:
+                parent_pos.append(i + 1)
+                adj_matrix[:, i][i] = 1
+            elif two_parents:
+                parent_pos.extend([i + 1, i + 2])
+            self.action_graph.fill_parents(i, parent_pos)
+
+            # add parent matrix data
+            # select helper based on op
+            match op:
+                case 0: self.action_graph.data.data_list[i]["matrix"] = self._datagen_none(parent_pos)
+                case 1: self.action_graph.data.data_list[i]["matrix"] = self._datagen_inv(parent_pos)
+                case 2: self.action_graph.data.data_list[i]["matrix"] = self._datagen_inv(parent_pos)
+                case 3: self.action_graph.data.data_list[i]["matrix"] = self._datagen_inv(parent_pos)
+                case 4: self.action_graph.data.data_list[i]["matrix"] = self._datagen_inv(parent_pos)
+
+    def _datagen_none(self, children: list[int]) -> np.ndarray:
+        """Protected helper method for datagen; for the "None" operation.
+        Returns the calculated matrix.
+        :param children: List of the indices of the child nodes.
+        :type children: list
+
+        :rtype: np.ndarray
+        """
+        pos = children[0]
+        scalar = self.action_graph.data.data_list[pos]["scalar"]
+        matrix = self.action_graph.data.data_list[pos]["matrix"]
+        matrix = matrix / scalar
+        return matrix
+
+    def _datagen_inv(self, children: list[int]) -> np.ndarray:
+        """Protected helper method for datagen; for the "Inverse" operation.
+                Returns the calculated matrix.
+        :param children: List of the indices of the child nodes.
+        :type children: list
+
+        :rtype: np.ndarray
+        """
+        pos = children[0]
+        scalar = self.action_graph.data.data_list[pos]["scalar"]
+        matrix = self.action_graph.data.data_list[pos]["matrix"]
+        matrix = matrix / scalar
+        matrix = np.invert(matrix)
+        return matrix
+
+    def _datagen_add(self, children: list[int]) -> np.ndarray:
+        """Protected helper method for datagen; for the "Addition" operation.
+                Returns the calculated matrix.
+        :param children: List of the indices of the child nodes.
+        :type children: list
+
+        :rtype: np.ndarray
+        """
+        pos = children[0]
+        scalar = self.action_graph.data.data_list[pos]["scalar"]
+        matrix = self.action_graph.data.data_list[pos]["matrix"]
+        matrix = matrix / scalar
+        # TODO: finish add operation
+        return matrix
+
+    def _datagen_sub(self, children: list[int]) -> np.ndarray:
+        """Protected helper method for datagen; for the "Subtraction" operation.
+                Returns the calculated matrix.
+        :param children: List of the indices of the child nodes.
+        :type children: list
+
+        :rtype: np.ndarray
+        """
+        pos = children[0]
+        scalar = self.action_graph.data.data_list[pos]["scalar"]
+        matrix = self.action_graph.data.data_list[pos]["matrix"]
+        matrix = matrix / scalar
+        # TODO: finish sub operation
+        return matrix
+
+    def _datagen_mul(self, children: list[int]) -> np.ndarray:
+        """Protected helper method for datagen; for the "Multiplication" operation.
+                Returns the calculated matrix.
+        :param children: List of the indices of the child nodes.
+        :type children: list
+
+        :rtype: np.ndarray
+        """
+        pos = children[0]
+        scalar = self.action_graph.data.data_list[pos]["scalar"]
+        matrix = self.action_graph.data.data_list[pos]["matrix"]
+        matrix = matrix / scalar
+        # TODO: finish mul operation
+        return matrix
 
 
 # testing (remove later)
 if __name__ == "__main__":
-    A = np.array([1, 2], [3, 4])
+    A = np.array([[1, 2], [3, 4]])
     tester = MatrixAGG(max_nodes=10, matrix=A)
     tester.datagen()
     print(tester.action_graph.data.data_list)

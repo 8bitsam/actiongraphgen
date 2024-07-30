@@ -35,6 +35,16 @@ class ActionGraph:
         self.param_types = param_types
         self.graph = self._to_graph()
 
+    def get_child_nodes(self, node: int) -> np.ndarray:
+        """Method to get all the positions of a node's children and return them in an array.
+        :param node: The index of the node (within the adjacency matrix) to find child positions for.
+        :type node: int
+
+        :rtype: np.ndarray
+        """
+        row = self.adj_matrix[:, node]
+        return np.nonzero(row)[0]
+
     def _to_graph(self) -> nx.DiGraph:
         """Protected method that creates a networkx DiGraph object from the adjacency matrix.
 

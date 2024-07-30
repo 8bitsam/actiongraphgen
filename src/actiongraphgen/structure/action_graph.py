@@ -1,10 +1,37 @@
+##############################################################################
+#
+# (c) 2024 The Trustees of Columbia University in the City of New York.
+# All rights reserved.
+#
+# File coded by: Billinge Group members and community contributors.
+#
+# See GitHub contributions for a more detailed list of contributors.
+# https://github.com/8bitsam/actiongraphgen/graphs/contributors
+#
+# See LICENSE.rst for license information.
+#
+##############################################################################
+
 import networkx as nx
+
 import numpy as np
+
 from node_data import NodeData
 
 
 class ActionGraph:
+    """This class is a representation of an action graph.
+
+    :param max_nodes: The maximum number of nodes in the action graph.
+    :type max_nodes: int
+
+    :param param_types: A dictionary containing key-value pairs of parameter names and their types.
+    :type param_types: dict
+    """
+
     def __init__(self, max_nodes: int, param_types: dict) -> None:
+        """Constructor method
+        """
         self.adj_matrix = np.zeros((max_nodes, max_nodes))
         self.data = NodeData(max_nodes, param_types)
         self.max_nodes = max_nodes
@@ -12,7 +39,8 @@ class ActionGraph:
         self.graph = self._to_graph()
 
     def _to_graph(self) -> nx.DiGraph:
-        # Creates a networkx graph object from the adjacency matrix
+        """Protected method that creates a networkx DiGraph object from the adjacency matrix.
+        """
         G = nx.DiGraph()
         for i in range(self.max_nodes):
             for j in range(self.max_nodes):

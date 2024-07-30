@@ -23,7 +23,7 @@ class MatrixAGG(Generator):
     """An example action graph generator (AGG) class that uses matrix operations. It extends the
     :class `actiongraphgen.structure.generator` class.
 
-    :param max_nodes: The maximum number of nodes in the graph.
+    :param max_nodes: The maximum number of nodes in the action graph.
     :type max_nodes: int
 
     :param: matrix: The input data for this generator. It should be a square matrix containing integers.

@@ -47,3 +47,11 @@ class MatrixAGG(Generator):
             op = random.randint(0, 4)
             self.action_graph.data.data_list[i]["scalar"] = scalar
             self.action_graph.data.data_list[i]["op"] = op
+
+
+# testing (remove later)
+if __name__ == "__main__":
+    A = np.array([1, 2], [3, 4])
+    tester = MatrixAGG(max_nodes=10, matrix=A)
+    tester.datagen()
+    print(tester.action_graph.data.data_list)

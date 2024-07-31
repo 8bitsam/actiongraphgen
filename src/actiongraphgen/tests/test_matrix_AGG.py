@@ -12,8 +12,9 @@
 #
 #############################################################################
 
-import numpy as np
 import random
+
+import numpy as np
 
 from src.actiongraphgen.matrix_example.matrix_AGG import MatrixAGG
 
@@ -26,11 +27,11 @@ def test_datagen():
     try:
         tester.datagen()
         assert True
-    except Exception as e:
-        assert False, f"datagen() raised an exception."
+    except Exception:
+        assert False, "matrix_AGG.datagen() raised an exception."
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Do 10 runs
     for i in range(10):
         test_datagen()

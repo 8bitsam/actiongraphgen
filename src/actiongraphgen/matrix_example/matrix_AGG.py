@@ -138,11 +138,6 @@ class MatrixAGG(Generator):
         adj_matrix = self.action_graph.adj_matrix
 
         for i in range(self.max_nodes):
-            og_matrix = np.copy(self.action_graph.data.data_list[i]["matrix"])
-
-            # 1's in row i represent children -> find 1's for this
-            # 1's in column i represent parents -> add 1's for this
-
             # get random values and assign them to list
             scalar = random.randint(1, 100)
             op = random.randint(0, 4)

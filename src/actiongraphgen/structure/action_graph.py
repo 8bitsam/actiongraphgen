@@ -15,6 +15,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
+
 from src.actiongraphgen.structure.node_data import NodeData
 
 
@@ -50,10 +51,10 @@ class ActionGraph:
 
     def display(self) -> None:
         """Display the graph using matplotlib."""
-        pos = nx.spring_layout(self.graph, k=2/np.sqrt(self.graph.order()), iterations=50)
+        pos = nx.spring_layout(self.graph, k=2 / np.sqrt(self.graph.order()), iterations=50)
         nx.draw(self.graph, pos, with_labels=True, node_size=500, arrowsize=20)
         plt.title("Directed Graph")
-        plt.axis('off')
+        plt.axis("off")
         plt.show()
 
     def fill_parents(self, node_pos: int, parents: list[int]) -> None:

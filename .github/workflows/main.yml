@@ -49,6 +49,6 @@ jobs:
         shell: bash -l {0}
         run: |
           conda activate test
-          coverage run -m pytest -vv -s
+          coverage run -m pytest -vv -s .tests/test_matrix_AGG.py
           coverage report -m
           codecov

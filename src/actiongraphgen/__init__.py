@@ -15,8 +15,12 @@
 
 """Structural framework for action graph generators."""
 
-# package version
-from src.actiongraphgen.version import __version__
+# from .database import database, drive
+from .matrix_example import matrix_AGG
+from .structure import action_graph, generator, node_data
+from .version import __version__
+
+__all__ = ['matrix_AGG', 'action_graph', 'generator', 'node_data', '__version__']
 
 # silence the pyflakes syntax checker
 assert __version__ or True

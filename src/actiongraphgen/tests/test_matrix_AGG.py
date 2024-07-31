@@ -16,7 +16,7 @@ import random
 
 import numpy as np
 
-from src.actiongraphgen.matrix_example.matrix_AGG import MatrixAGG
+from actiongraphgen.matrix_example.matrix_AGG import MatrixAGG
 
 
 def test_datagen():

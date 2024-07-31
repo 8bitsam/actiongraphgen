@@ -12,7 +12,7 @@
 #
 ##############################################################################
 
-from src.actiongraphgen.structure.action_graph import ActionGraph
+from actiongraphgen.structure.action_graph import ActionGraph
 
 
 class Generator:

@@ -49,6 +49,6 @@ jobs:
         shell: bash -l {0}
         run: |
           conda activate test
-          coverage run --source=src/actiongraphgen -m pytest -vv -s
+          coverage run -m pytest -vv -s
           coverage report -m
           codecov

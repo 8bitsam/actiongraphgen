@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
-from src.actiongraphgen.structure.node_data import NodeData
+from actiongraphgen.structure.node_data import NodeData
 
 
 class ActionGraph:

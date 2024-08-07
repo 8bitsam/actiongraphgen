@@ -34,11 +34,9 @@ class ActionGraph:
 
         :rtype: nx.DiGraph
         """
-        G = nx.DiGraph()
-        for i in range(self.max_nodes):
-            for j in range(self.max_nodes):
-                if self.adj_matrix[i, j] == 1:
-                    G.add_edge(i, j)
+        G = nx.from_numpy_array(self.adj_matrix)
+        for i, data in enumerate(self.data.data_list):
+            G.nodes[i].update(data)
         return G
 
     def __init__(self, max_nodes: int, param_types: dict) -> None:

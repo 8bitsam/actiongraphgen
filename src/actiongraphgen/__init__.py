@@ -17,10 +17,11 @@
 
 # from .database import database, drive
 from .matrix_example import matrix_AGG
+from .net import graph_RNN, trainer
 from .structure import action_graph, generator, node_data
 from .version import __version__
 
-__all__ = ["matrix_AGG", "action_graph", "generator", "node_data", "__version__"]
+__all__ = ["matrix_AGG", "action_graph", "generator", "node_data", "graph_RNN", "trainer", "__version__"]
 
 # silence the pyflakes syntax checker
 assert __version__ or True

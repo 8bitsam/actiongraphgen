@@ -13,6 +13,7 @@
 ##############################################################################
 
 from actiongraphgen.structure.action_graph import ActionGraph
+from actiongraphgen.net.trainer import Trainer
 
 
 class Generator:
@@ -30,9 +31,10 @@ class Generator:
     :type processes: dict
     """
 
-    def __init__(self, max_nodes: int, param_types: dict, processes: dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict, processes: dict, trainer: Trainer) -> None:
         """Constructor method"""
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.processes = processes
         self.action_graph = ActionGraph(max_nodes, param_types)
+        self.trainer = trainer

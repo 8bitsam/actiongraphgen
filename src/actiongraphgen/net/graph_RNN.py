@@ -39,6 +39,6 @@ class GraphRNN(nn.Module):
         out, _ = self.node_rnn(node_features, h)
 
         # Generate adjacency matrix
-        adj_logits = self.fc_adj(out) # (batch_size, max_nodes, max_nodes)
+        adj_logits = self.fc_adj(out)  # (batch_size, max_nodes, max_nodes)
 
         return adj_logits

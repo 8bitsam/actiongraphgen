@@ -60,7 +60,7 @@ class Trainer:
             loss.backward()
             optimizer.step()
 
-            print(f'Epoch: {epoch+1}/{epochs}, Loss: {loss.item()}')
+            print(f"Epoch: {epoch+1}/{epochs}, Loss: {loss.item()}")
 
     def generate_graph(self, initial_node_features):
         model = self.model

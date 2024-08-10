@@ -12,8 +12,8 @@
 #
 ##############################################################################
 
-from actiongraphgen.structure.action_graph import ActionGraph
 from actiongraphgen.net.trainer import Trainer
+from actiongraphgen.structure.action_graph import ActionGraph
 
 
 class Generator:

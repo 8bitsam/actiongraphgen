@@ -25,7 +25,7 @@ Exceptions raised by failed tests or other errors are not caught.
 if __name__ == "__main__":
     import sys
 
-    from actiongraphgen.tests import testsuite
+    from tests import testsuite
 
     pattern = sys.argv[1] if len(sys.argv) > 1 else ""
     suite = testsuite(pattern)

@@ -1,4 +1,3 @@
-asyncio
 matplotlib
 numpy
 networkx

@@ -123,7 +123,7 @@ class ActionGraph:
         :param input_data: Any input data.
         :type input_data: any
         """
-        root_nodes = [i for i in range(self.max_nodes) if not self.get_parents(i)]
+        root_nodes = [i for i in range(self.max_nodes) if len(self.get_parents(i)) == 0]
         output_data = input_data
         visited = set()
         for root in root_nodes:
@@ -139,7 +139,7 @@ class ActionGraph:
         processed_data = self.data.process_node(node, input_data)
         children = self.get_children(node)
 
-        if not children:
+        if len(children) == 0:
             return processed_data  # out of terminal node
         else:
             for child in children:

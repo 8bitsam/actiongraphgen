@@ -41,12 +41,12 @@ class NodeData:
             lst.append(data_dict)
         return lst
 
-    def process_node(self, node_pos: int, input_data: list):
+    def process_node(self, node_pos: int, input_data: any):
         """Process the input data at a specific node. This is a placeholder and must be implemented by all
         subclasses.
         :param node_pos: The index of the node to process data at.
         :type node_pos: int
 
         :param input_data: The input data to be processed.
-        :type input_data: list"""
+        :type input_data: any"""
         raise NotImplementedError("process_node must be implemented by subclasses.")

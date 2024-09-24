@@ -22,7 +22,8 @@ class MessageBus:
     def __init__(self):
         """Constructor method"""
         self.channels = defaultdict(list)
-        self.loop = asyncio.get_event_loop()
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
 
     def register_listener(self, channel: str, listener):
         """Register a node to listen to a specific channel.

@@ -1,5 +1,6 @@
 flake8
 pytest
+pytest-asyncio
 codecov
 coverage
 pytest-env

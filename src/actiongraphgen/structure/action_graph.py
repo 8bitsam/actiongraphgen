@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
+from actiongraphgen.stream.message_bus import MessageBus
 from actiongraphgen.structure.node_data import NodeData
 
 
@@ -41,16 +42,38 @@ class ActionGraph:
                     G.add_edge(i, j)
         return G
 
-    def __init__(self, max_nodes: int, param_types: dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict, node_data_class=NodeData) -> None:
         """Constructor method"""
         self.adj_matrix = np.zeros((max_nodes, max_nodes))
-        self.data = NodeData(max_nodes, param_types)
+        self.data = node_data_class(max_nodes, param_types)
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.graph = self._to_graph()
+        self.terminal_node = None
+        self.message_bus = MessageBus()
+
+    def set_terminal_node(self, node_pos: int) -> None:
+        """Set the terminal node of the graph.
+        :param node_pos: The index of the terminal node.
+        :type node_pos: int"""
+        if self.terminal_node is not None:
+            raise ValueError("A terminal node already exists. Only one terminal node is allowed.")
+        self.terminal_node = node_pos
+
+    def check(self) -> None:
+        """Check and enforce the directed, acyclic structure of an action graph."""
+        if not nx.is_directed_acyclic_graph(self.graph):
+            raise ValueError("Not a directed acyclic graph.")
+
+    def __str__(self):
+        """Return a concatenation of the adjacency matrix and data for printing."""
+        printed_adj = f"Adjacency matrix:\n{self.adj_matrix}"
+        printed_data = f"Data:\n{self.data.data_list}"
+        return printed_adj + '\n' + printed_data
 
     def display(self) -> None:
         """Display the graph using matplotlib."""
+        self.update()
         pos = nx.spring_layout(self.graph, k=2 / np.sqrt(self.graph.order()), iterations=50)
         nx.draw(self.graph, pos, with_labels=True, node_size=500, arrowsize=20)
         plt.title("Directed Graph")
@@ -90,6 +113,36 @@ class ActionGraph:
         col = self.adj_matrix[:, node]
         return np.nonzero(col)[0]
 
-    def update_graph(self) -> None:
+    def update(self) -> None:
         """Update the networkx DiGraph object according to current data."""
         self.graph = self._to_graph()
+        self.check()
+
+    def process_stream(self, input_data: any):
+        """Run the input stream through the message bus and return the output from the terminal node.
+        :param input_data: Any input data.
+        :type input_data: any
+        """
+        root_nodes = [i for i in range(self.max_nodes) if not self.get_parents(i)]
+        output_data = input_data
+        visited = set()
+        for root in root_nodes:
+            output_data = self._propagate_data(root, output_data, visited)
+        print("OUT:", output_data)
+        return output_data
+
+    def _propagate_data(self, node: int, input_data: any, visited: set) -> any:
+        """Recursively propagate data through the graph from a given node."""
+        if node in visited:
+            return input_data
+
+        visited.add(node)
+        processed_data = self.data.process_node(node, input_data)
+        children = self.get_children(node)
+
+        if not children:
+            return processed_data  # out of terminal node
+        else:
+            for child in children:
+                processed_data = self._propagate_data(child, processed_data, visited)
+            return processed_data

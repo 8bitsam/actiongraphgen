@@ -195,4 +195,4 @@ class MatrixAGG(Generator):
                         self.action_graph.data.data_list[parent_pos[0]]["matrix"] = matrices[1]
 
         # update nx graph object
-        self.action_graph.update_graph()
+        self.action_graph.update()

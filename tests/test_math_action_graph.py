@@ -13,7 +13,9 @@
 #############################################################################
 
 import pytest
+
 from actiongraphgen.structure.action_graph import ActionGraph
+
 from .math_action_graph import MathNodeData
 
 
@@ -28,11 +30,11 @@ def math_graph():
     graph.fill_parents(2, [1])  # node 2 depends on node 1
 
     # Set operations for each node
-    graph.data.data_list[0]['operation'] = 'add'
-    graph.data.data_list[0]['amount'] = 10
+    graph.data.data_list[0]["operation"] = "add"
+    graph.data.data_list[0]["amount"] = 10
 
-    graph.data.data_list[1]['operation'] = 'multiply'
-    graph.data.data_list[1]['factor'] = 2
+    graph.data.data_list[1]["operation"] = "multiply"
+    graph.data.data_list[1]["factor"] = 2
 
     return graph
 

@@ -69,7 +69,7 @@ class ActionGraph:
         """Return a concatenation of the adjacency matrix and data for printing."""
         printed_adj = f"Adjacency matrix:\n{self.adj_matrix}"
         printed_data = f"Data:\n{self.data.data_list}"
-        return printed_adj + '\n' + printed_data
+        return printed_adj + "\n" + printed_data
 
     def display(self) -> None:
         """Display the graph using matplotlib."""

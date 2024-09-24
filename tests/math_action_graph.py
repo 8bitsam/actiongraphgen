@@ -17,13 +17,13 @@ from actiongraphgen.structure.node_data import NodeData
 
 def _process_add(input_data: float, node_params: dict) -> float:
     """Add a specified amount to the input data."""
-    amount = node_params.get('amount', 0)
+    amount = node_params.get("amount", 0)
     return input_data + amount
 
 
 def _process_multiply(input_data: float, node_params: dict) -> float:
     """Multiply the input data by a specified factor."""
-    factor = node_params.get('factor', 1)
+    factor = node_params.get("factor", 1)
     return input_data * factor
 
 
@@ -35,11 +35,11 @@ class MathNodeData(NodeData):
         Node parameters must include 'operation' (e.g., 'add', 'multiply') and relevant values.
         """
         node_params = self.data_list[node_pos]
-        operation = node_params.get('operation')
+        operation = node_params.get("operation")
 
-        if operation == 'add':
+        if operation == "add":
             return _process_add(input_data, node_params)
-        elif operation == 'multiply':
+        elif operation == "multiply":
             return _process_multiply(input_data, node_params)
         else:
             return input_data

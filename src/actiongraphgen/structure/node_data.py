@@ -12,6 +12,7 @@
 #
 ##############################################################################
 
+
 class NodeData:
     """This class represents a data object that contains node data and storage parameters for the action graph.
 
@@ -41,7 +42,8 @@ class NodeData:
         return lst
 
     def process_node(self, node_pos: int, input_data: list):
-        """Process the input data at a specific node. This is a placeholder and must be implemented by all subclasses.
+        """Process the input data at a specific node. This is a placeholder and must be implemented by all
+        subclasses.
         :param node_pos: The index of the node to process data at.
         :type node_pos: int
 

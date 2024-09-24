@@ -128,7 +128,6 @@ class ActionGraph:
         visited = set()
         for root in root_nodes:
             output_data = self._propagate_data(root, output_data, visited)
-        print("OUT:", output_data)
         return output_data
 
     def _propagate_data(self, node: int, input_data: any, visited: set) -> any:

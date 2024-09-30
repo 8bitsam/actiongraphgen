@@ -36,6 +36,10 @@ classifiers = [
 Homepage = "https://github.com/8bitsam/actiongraphgen/"
 Issues = "https://github.com/8bitsam/actiongraphgen/issues/"
 
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+asyncio_default_fixture_loop_scope = "function"
+
 [tool.setuptools-git-versioning]
 enabled = true
 template = "{tag}"

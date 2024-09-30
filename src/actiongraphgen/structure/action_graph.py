@@ -12,10 +12,13 @@
 #
 ##############################################################################
 
+import asyncio
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
+from actiongraphgen.stream.message_bus import MessageBus
 from actiongraphgen.structure.node_data import NodeData
 
 
@@ -41,16 +44,38 @@ class ActionGraph:
                     G.add_edge(i, j)
         return G
 
-    def __init__(self, max_nodes: int, param_types: dict) -> None:
+    def __init__(self, max_nodes: int, param_types: dict, node_data_class=NodeData) -> None:
         """Constructor method"""
         self.adj_matrix = np.zeros((max_nodes, max_nodes))
-        self.data = NodeData(max_nodes, param_types)
+        self.data = node_data_class(max_nodes, param_types)
         self.max_nodes = max_nodes
         self.param_types = param_types
         self.graph = self._to_graph()
+        self.terminal_node = None
+        self.message_bus = MessageBus()
+
+    def set_terminal_node(self, node_pos: int) -> None:
+        """Set the terminal node of the graph.
+        :param node_pos: The index of the terminal node.
+        :type node_pos: int"""
+        if self.terminal_node is not None:
+            raise ValueError("A terminal node already exists. Only one terminal node is allowed.")
+        self.terminal_node = node_pos
+
+    def check(self) -> None:
+        """Check and enforce the directed, acyclic structure of an action graph."""
+        if not nx.is_directed_acyclic_graph(self.graph):
+            raise ValueError("Not a directed acyclic graph.")
+
+    def __str__(self):
+        """Return a concatenation of the adjacency matrix and data for printing."""
+        printed_adj = f"Adjacency matrix:\n{self.adj_matrix}"
+        printed_data = f"Data:\n{self.data.data_list}"
+        return printed_adj + "\n" + printed_data
 
     def display(self) -> None:
         """Display the graph using matplotlib."""
+        self.update()
         pos = nx.spring_layout(self.graph, k=2 / np.sqrt(self.graph.order()), iterations=50)
         nx.draw(self.graph, pos, with_labels=True, node_size=500, arrowsize=20)
         plt.title("Directed Graph")
@@ -90,6 +115,59 @@ class ActionGraph:
         col = self.adj_matrix[:, node]
         return np.nonzero(col)[0]
 
-    def update_graph(self) -> None:
+    def update(self) -> None:
         """Update the networkx DiGraph object according to current data."""
         self.graph = self._to_graph()
+        self.check()
+
+    async def process_stream(self, input_stream: list[any]) -> list[any]:
+        """Run the input stream through the message bus and return the output from the terminal node.
+        :param input_stream: Input data stream.
+        :type input_stream: list[any]
+        """
+        results = []
+        for input_data in input_stream:
+            result = await self._process_single_input(input_data)
+            results.append(result)
+        return results
+
+    async def _process_single_input(self, input_data: any) -> any:
+        """Process a single input through the graph, return result from the terminal node.
+        This is a helper method for the process_stream method.
+        :param input_data: Any input data.
+        :type input_data: any
+        """
+        root_nodes = [i for i in range(self.max_nodes) if len(self.get_parents(i)) == 0]
+        output_data = input_data
+        visited = set()
+        for root in root_nodes:
+            output_data = self._propagate_data(root, output_data, visited)
+        return output_data
+
+    def _propagate_data(self, node: int, input_data: any, visited: set) -> any:
+        """Recursively propagate data through the graph from a given node."""
+        if node in visited:
+            return input_data
+
+        visited.add(node)
+        processed_data = self.data.process_node(node, input_data)
+        children = self.get_children(node)
+
+        if len(children) == 0:
+            return processed_data  # out of terminal node
+        else:
+            for child in children:
+                processed_data = self._propagate_data(child, processed_data, visited)
+            return processed_data
+
+    async def process_parallel_streams(self, input_streams: list[list[any]]) -> list[list[any]]:
+        """Process multiple input streams in parallel.
+        :param input_streams: A list of input streams.
+        :type input_streams: list[list[any]]
+        """
+        tasks = [self.process_stream(input_stream) for input_stream in input_streams]
+        gathered = await asyncio.gather(*tasks)
+        out = []
+        for output in gathered:
+            out.append(output)
+        return out

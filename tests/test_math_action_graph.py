@@ -60,18 +60,12 @@ async def test_parallel_input_streams(math_graph):
     """Test processing multiple input streams in parallel through the math action graph."""
     # Stream 1: [5, 10]
     # Stream 2: [20, 30]
-    input_streams = [
-        [5, 10],
-        [20, 30]
-    ]
+    input_streams = [[5, 10], [20, 30]]
 
     # Expected results:
     # For stream 1: [(5 + 10) * 2 = 30, (10 + 10) * 2 = 40]
     # For stream 2: [(20 + 10) * 2 = 60, (30 + 10) * 2 = 80]
-    expected = [
-        [30, 40],
-        [60, 80]
-    ]
+    expected = [[30, 40], [60, 80]]
 
     # Process input streams in parallel
     results = await math_graph.process_parallel_streams(input_streams)

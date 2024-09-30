@@ -42,9 +42,14 @@ def math_graph():
 @pytest.mark.asyncio
 async def test_math_graph_processing(math_graph):
     """Test processing a data stream through the math action graph."""
-    input_data = 5
+    input_stream = [5, 10, 20]
 
-    # Expected processing: (5 + 10) * 2 = 30
-    result = math_graph.process_stream(input_data)
+    # Expected processing:
+    # Input 5: (5 + 10) * 2 = 30
+    # Input 10: (10 + 10) * 2 = 40
+    # Input 20: (20 + 10) * 2 = 60
+    expected = [30, 40, 60]
 
-    assert result == 30, f"Expected 30 but got {result}"
+    result = math_graph.process_stream(input_stream)
+
+    assert result == expected, f"Expected {expected} but got {result}"

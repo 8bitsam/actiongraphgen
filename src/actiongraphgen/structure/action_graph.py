@@ -118,8 +118,20 @@ class ActionGraph:
         self.graph = self._to_graph()
         self.check()
 
-    def process_stream(self, input_data: any):
+    def process_stream(self, input_stream: list[any]) -> list[any]:
         """Run the input stream through the message bus and return the output from the terminal node.
+        :param input_stream: Input data stream.
+        :type input_stream: list[any]
+        """
+        results = []
+        for input_data in input_stream:
+            result = self._process_single_input(input_data)
+            results.append(result)
+        return results
+
+    def _process_single_input(self, input_data: any) -> any:
+        """Process a single input through the graph, return result from the terminal node.
+        This is a helper method for the process_stream method.
         :param input_data: Any input data.
         :type input_data: any
         """

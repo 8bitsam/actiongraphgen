@@ -12,6 +12,7 @@
 #
 ##############################################################################
 
+import asyncio
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
@@ -118,18 +119,18 @@ class ActionGraph:
         self.graph = self._to_graph()
         self.check()
 
-    def process_stream(self, input_stream: list[any]) -> list[any]:
+    async def process_stream(self, input_stream: list[any]) -> list[any]:
         """Run the input stream through the message bus and return the output from the terminal node.
         :param input_stream: Input data stream.
         :type input_stream: list[any]
         """
         results = []
         for input_data in input_stream:
-            result = self._process_single_input(input_data)
+            result = await self._process_single_input(input_data)
             results.append(result)
         return results
 
-    def _process_single_input(self, input_data: any) -> any:
+    async def _process_single_input(self, input_data: any) -> any:
         """Process a single input through the graph, return result from the terminal node.
         This is a helper method for the process_stream method.
         :param input_data: Any input data.
@@ -157,3 +158,15 @@ class ActionGraph:
             for child in children:
                 processed_data = self._propagate_data(child, processed_data, visited)
             return processed_data
+
+    async def process_parallel_streams(self, input_streams: list[list[any]]) -> list[list[any]]:
+        """Process multiple input streams in parallel.
+        :param input_streams: A list of input streams.
+        :type input_streams: list[list[any]]
+        """
+        tasks = [self.process_stream(input_stream) for input_stream in input_streams]
+        gathered = await asyncio.gather(*tasks)
+        out = []
+        for output in gathered:
+            out.append(output)
+        return out
